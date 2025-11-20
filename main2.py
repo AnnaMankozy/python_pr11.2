@@ -26,20 +26,23 @@ except Exception as e:
     print("Ошибка при чтении файла:", e)
     exit()
 
-print("Перші 5 рядків:\n", df.head())
-print("\nІнформація про DataFrame:\n", df.info())
-print("\nОписова статистика:\n", df.describe())
+print("Перші 5 рядків:\n")
+print(df.head())
+print("\nІнформація про DataFrame:\n")
+df.info()
+print("\nОписова статистика:\n")
+print(df.describe())
 
 total_bikes = df.select_dtypes(include='number').sum().sum()
-print("\nЗагальна кількість велосипедистів за рік на усіх велодоріжках:\n", total_bikes)
+print("\nЗагальна кількість велосипедистів за рік на усіх велодоріжках:", total_bikes)
 
 total_per_track = df.select_dtypes(include='number').sum()
-print("\nЗагальна кількість велосипедистів за рік по кожній велодоріжці:", total_per_track)
+print("\nЗагальна кількість велосипедистів за рік по кожній велодоріжці:\n", total_per_track)
 
 bike_tracks = df.select_dtypes(include='number').columns
 tracks = bike_tracks[:3]
 
-df_monthly = df.resample('M').sum()
+df_monthly = df.resample('ME').sum()
 
 for track in tracks:
     popular_month = df_monthly[track].idxmax().strftime('%B')
